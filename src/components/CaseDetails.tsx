@@ -46,7 +46,7 @@ export function CaseDetails({
                 <Trash2 className="h-4 w-4" />
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="h-[300px] space-y-5">
+            <AlertDialogContent className="h-[320px] md:h-[300px] md:space-y-5">
               <AlertDialogHeader>
                 <AlertDialogTitle className="text-destructive font-semibold text-xl">
                   Delete Case

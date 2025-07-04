@@ -134,15 +134,23 @@ function App() {
     return (
       <div className="min-h-screen bg-background p-4 sm:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
-          <header className="text-center mb-8">
-            <div className="hidden md:block flex-col leaing-0 md:leading-3">
-              <h1 className="  md:text-3xl font-bold text-foreground">
-                <span className="text-primary">Judgment</span> Calc
-              </h1>
-              <p className="text-sm md:text-md text-muted-foreground md:mt-2">
-                Manage cases, track payments, and calculate interest
-              </p>
+          <header className="flex items-center justify-between text-center gap-10 h-10 md:h-full ">
+            <div className="flex items-start justify-center gap-2.5">
+              <img
+                src={logo}
+                alt="justicalc"
+                className="size-16 md:size-20 rounded-xl"
+              />
+              <div className="flex flex-col items-start justify-center">
+                <h1 className="  md:text-3xl font-bold text-foreground">
+                  <span className="text-primary">Judgment</span> Calc
+                </h1>
+                <p className="text-sm md:text-md text-muted-foreground md:mt-2 text-left">
+                  Manage cases, track payments, and calculate interest
+                </p>
+              </div>
             </div>
+            <ThemeToggle />
           </header>
 
           <EmptyState onAddNewCase={handleAddNewCase} />
@@ -161,15 +169,19 @@ function App() {
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        <header className="text-center mb-8">
-          <div className="flex justify-between items-center mb-4"> 
-            <div className="hidden md:flex items-start justify-center gap-2.5">
-              <img src={logo} alt="" className="size-20 rounded-xl" />
+        <header className="text-center mb-8 h-16 md:h-full">
+          <div className="flex justify-between items-center mb-4 gap-5">
+            <div className="flex items-start justify-center gap-2.5">
+              <img
+                src={logo}
+                alt="justicalc"
+                className="size-16 md:size-20 rounded-xl"
+              />
               <div className="flex flex-col items-start justify-center">
                 <h1 className="  md:text-3xl font-bold text-foreground">
                   <span className="text-primary">Judgment</span> Calc
                 </h1>
-                <p className="text-sm md:text-md text-muted-foreground md:mt-2">
+                <p className="text-sm md:text-md text-muted-foreground md:mt-2 text-left">
                   Manage cases, track payments, and calculate interest
                 </p>
               </div>
