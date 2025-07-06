@@ -65,8 +65,7 @@ export function TransactionForm({
   const [waitingForInput, setWaitingForInput] = useState(false);
 
   const form = useForm<TransactionFormData>({
-    // @ts-ignore
-    resolver: zodResolver(transactionSchema),
+    resolver: zodResolver(transactionSchema as any),
     defaultValues: {
       type: "PAYMENT",
       amount: 0,
