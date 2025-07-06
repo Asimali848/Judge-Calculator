@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calculator, Equal, Minus, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -36,8 +35,9 @@ import {
   calculateNewBalance,
   formatCurrency,
 } from "@/lib/calculations";
-import { CaseData, Transaction, TransactionFormData } from "@/types/case";
+import { CaseData, Transaction } from "@/types/case";
 
+// ✅ Zod schema
 const transactionSchema = z.object({
   type: z.enum(["PAYMENT", "COST", "INTEREST"]),
   amount: z.number().min(0.01, "Amount must be greater than 0"),
@@ -46,10 +46,13 @@ const transactionSchema = z.object({
   interestRate: z.number().min(0, "Interest rate must be positive"),
 });
 
+// ✅ Inferred type from schema
+type TransactionFormData = z.infer<typeof transactionSchema>;
+
 interface TransactionFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: TransactionFormData) => void;
+  onSubmit: (data: TransactionFormData & { calculatedInterest: number; newBalance: number }) => void;
   caseData: CaseData;
   editTransaction?: Transaction;
 }
@@ -67,7 +70,6 @@ export function TransactionForm({
   const [waitingForInput, setWaitingForInput] = useState(false);
 
   const form = useForm<TransactionFormData>({
-    //@ts-ignore
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: "PAYMENT",
@@ -156,7 +158,7 @@ export function TransactionForm({
   const calculatedInterest = calculateInterest(
     caseData.principalBalance,
     watchedValues.interestRate || 10,
-    30 // Assuming 30 days for calculation
+    30
   );
 
   const newBalance = calculateNewBalance(
@@ -307,7 +309,6 @@ export function TransactionForm({
                   )}
                 />
 
-                {/* Calculations Display */}
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-sm">Calculations</CardTitle>
