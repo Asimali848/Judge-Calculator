@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -60,9 +60,9 @@ function Calendar({
       }}
       components={{
         //@ts-ignore
-        IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         //@ts-ignore
-        IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />
