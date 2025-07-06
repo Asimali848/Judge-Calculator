@@ -1,9 +1,11 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
-import { CaseData } from '@/types/case';
-import { CaseCard } from './CaseCard';
-import { EmptyState } from './EmptyState';
+import { Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CaseData } from "@/types/case";
+
+import { CaseCard } from "./CaseCard";
+import { EmptyState } from "./EmptyState";
 
 interface CaseListProps {
   cases: CaseData[];
@@ -13,10 +15,10 @@ interface CaseListProps {
   onDeleteCase: (caseId: string) => void;
 }
 
-export function CaseList({ 
-  cases, 
-  selectedCaseId, 
-  onCaseSelect, 
+export function CaseList({
+  cases,
+  selectedCaseId,
+  onCaseSelect,
   onAddNewCase,
 }: CaseListProps) {
   if (cases.length === 0) {
@@ -27,12 +29,12 @@ export function CaseList({
     <Card className="h-full max-h-[60vh] overflow-auto dark:bg-white/10">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-xl font-bold">Active Cases</CardTitle>
-        <Button 
+        <Button
           onClick={onAddNewCase}
-          className="bg-primary hover:bg-primary/80 text-white"
+          className="bg-primary text-white hover:bg-primary/80"
           size="sm"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add New Case
         </Button>
       </CardHeader>

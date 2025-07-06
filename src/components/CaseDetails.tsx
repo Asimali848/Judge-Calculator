@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Plus, Trash2, TriangleAlert } from "lucide-react";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +11,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Plus, Trash2, TriangleAlert } from "lucide-react";
-import { CaseData } from "@/types/case";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatDate } from "@/lib/calculations";
+import { CaseData } from "@/types/case";
 
 interface CaseDetailsProps {
   case: CaseData;
@@ -33,10 +34,10 @@ export function CaseDetails({
         <div className="flex space-x-2">
           <Button
             onClick={onAddTransaction}
-            className="bg-primary hover:bg-primary/80 text-white"
+            className="bg-primary text-white hover:bg-primary/80"
             size="sm"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="mr-2 h-4 w-4" />
             Cost/Payment
           </Button>
 
@@ -48,15 +49,15 @@ export function CaseDetails({
             </AlertDialogTrigger>
             <AlertDialogContent className="h-[320px] md:h-[300px] md:space-y-5">
               <AlertDialogHeader>
-                <AlertDialogTitle className="text-destructive font-semibold text-xl">
+                <AlertDialogTitle className="text-xl font-semibold text-destructive">
                   Delete Case
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  <div className="w-full flex flex-col items-center justify-center gap-2.5">
+                  <div className="flex w-full flex-col items-center justify-center gap-2.5">
                     <TriangleAlert className="size-16 text-red-500" />
-                    <span className="text-muted-foreground text-center">
+                    <span className="text-center text-muted-foreground">
                       Are you sure you want to delete{" "}
-                      <span className="text-destructive font-semibold">
+                      <span className="font-semibold text-destructive">
                         "{caseData.caseName}"
                       </span>
                       ? This action cannot be undone and will remove all
@@ -79,13 +80,13 @@ export function CaseDetails({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="text-center mb-6 py-5">
-          <h2 className="text-2xl font-bold text-primary mb-2">
+        <div className="mb-6 py-5 text-center">
+          <h2 className="mb-2 text-2xl font-bold text-primary">
             {caseData.caseName}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1  gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <div className="space-y-4">
             <div className="flex justify-between border-b border-muted-foreground/20 pb-1 dark:border-b dark:border-muted-foreground/20">
               <span className="text-muted-foreground">
@@ -116,7 +117,7 @@ export function CaseDetails({
             </div>
           </div>
 
-          <div className="space-y-4 ">
+          <div className="space-y-4">
             <div className="flex justify-between border-b border-muted-foreground/20 pb-1 dark:border-b dark:border-muted-foreground/20">
               <span className="text-muted-foreground">
                 Total Payments to Date
@@ -133,7 +134,7 @@ export function CaseDetails({
               </span>
             </div>
 
-            <div className="flex justify-between dark:border-b dark:border-muted-foreground/20 font-bold text-lg pt-10 ">
+            <div className="flex justify-between pt-10 text-lg font-bold dark:border-b dark:border-muted-foreground/20">
               <span className="text-muted-foreground">Today's Payoff</span>
               <span className="text-primary">
                 {formatCurrency(caseData.payoffAmount)}

@@ -15,7 +15,7 @@ export interface Transaction {
   id: string;
   caseId: string;
   date: string;
-  type: 'PAYMENT' | 'COST' | 'INTEREST';
+  type: "PAYMENT" | "COST" | "INTEREST";
   amount: number;
   accruedInterest: number;
   principalBalance: number;
@@ -23,7 +23,7 @@ export interface Transaction {
 }
 
 export interface TransactionFormData {
-  type: 'PAYMENT' | 'COST' | 'INTEREST';
+  type: "PAYMENT" | "COST" | "INTEREST";
   amount: number;
   date: string;
   description?: string;

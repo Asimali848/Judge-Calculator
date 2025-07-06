@@ -10,14 +10,14 @@ export function calculateNewBalance(
   currentBalance: number,
   paymentAmount: number,
   accruedInterest: number,
-  transactionType: 'PAYMENT' | 'COST' | 'INTEREST'
+  transactionType: "PAYMENT" | "COST" | "INTEREST"
 ): number {
   switch (transactionType) {
-    case 'PAYMENT':
+    case "PAYMENT":
       return Math.max(0, currentBalance + accruedInterest - paymentAmount);
-    case 'COST':
+    case "COST":
       return currentBalance + paymentAmount;
-    case 'INTEREST':
+    case "INTEREST":
       return currentBalance + paymentAmount;
     default:
       return currentBalance;
@@ -32,12 +32,12 @@ export function calculatePayoffAmount(
 }
 
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
   }).format(amount);
 }
 
 export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('en-US');
+  return new Date(date).toLocaleDateString("en-US");
 }

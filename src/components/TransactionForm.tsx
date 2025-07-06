@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Calculator, Equal, Minus, Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -18,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -26,15 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { TransactionFormData, Transaction, CaseData } from "@/types/case";
 import {
   calculateInterest,
   calculateNewBalance,
   formatCurrency,
 } from "@/lib/calculations";
-import { Calculator, Plus, Minus, Equal } from "lucide-react";
+import { CaseData, Transaction, TransactionFormData } from "@/types/case";
 
 const transactionSchema = z.object({
   type: z.enum(["PAYMENT", "COST", "INTEREST"]),
@@ -176,7 +178,7 @@ export function TransactionForm({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="h-full overflow-y-auto w-full">
+      <SheetContent className="h-full w-full overflow-y-auto">
         <SheetHeader>
           <SheetTitle className="text-xl font-bold">
             {editTransaction ? "Edit Transaction" : "Add New Transaction"}
@@ -186,7 +188,7 @@ export function TransactionForm({
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid grid-cols-1 xl:grid-cols-1 gap-6 mt-6">
+        <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-1">
           <div className="space-y-6">
             <Form {...form}>
               <form
@@ -325,7 +327,7 @@ export function TransactionForm({
                   </CardContent>
                 </Card>
 
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 pt-4">
+                <div className="flex flex-col space-y-2 pt-4 sm:flex-row sm:space-x-2 sm:space-y-0">
                   <Button type="submit" className="flex-1">
                     {editTransaction ? "Update Transaction" : "Add Transaction"}
                   </Button>
@@ -352,7 +354,7 @@ export function TransactionForm({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="bg-muted p-4 rounded text-right text-xl font-mono min-h-[60px] flex items-center justify-end">
+                  <div className="flex min-h-[60px] items-center justify-end rounded bg-muted p-4 text-right font-mono text-xl">
                     {calculatorDisplay}
                   </div>
                   <div className="grid grid-cols-4 gap-2">
