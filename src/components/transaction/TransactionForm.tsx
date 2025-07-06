@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Calculator, Equal, Minus, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import {
+  Calculator,
+  Equal,
+  Minus,
+  Plus,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,13 +51,16 @@ const transactionSchema = z.object({
   interestRate: z.number().min(0, "Interest rate must be positive"),
 });
 
-// ✅ Inferred type from schema
+// ✅ Type derived from schema
 type TransactionFormData = z.infer<typeof transactionSchema>;
 
 interface TransactionFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: TransactionFormData & { calculatedInterest: number; newBalance: number }) => void;
+  onSubmit: (data: TransactionFormData & {
+    calculatedInterest: number;
+    newBalance: number;
+  }) => void;
   caseData: CaseData;
   editTransaction?: Transaction;
 }
@@ -69,7 +77,7 @@ export function TransactionForm({
   const [operation, setOperation] = useState<string | null>(null);
   const [waitingForInput, setWaitingForInput] = useState(false);
 
-  const form = useForm<TransactionFormData>({
+  const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: "PAYMENT",
@@ -94,7 +102,6 @@ export function TransactionForm({
     }
   }, [editTransaction, form]);
 
-  // Calculator functions
   const handleCalculatorNumber = (num: string) => {
     if (waitingForInput) {
       setCalculatorDisplay(num);
@@ -154,7 +161,6 @@ export function TransactionForm({
     }
   };
 
-  // Real-time calculations
   const calculatedInterest = calculateInterest(
     caseData.principalBalance,
     watchedValues.interestRate || 10,
@@ -194,20 +200,14 @@ export function TransactionForm({
         <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-1">
           <div className="space-y-6">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className="space-y-4"
-              >
+              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                 <FormField
                   control={form.control}
                   name="type"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Transaction Type</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select transaction type" />
@@ -237,17 +237,10 @@ export function TransactionForm({
                             step="0.01"
                             placeholder="0.00"
                             {...field}
-                            onChange={(e) =>
-                              field.onChange(parseFloat(e.target.value) || 0)
-                            }
+                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                           />
                         </FormControl>
-                        <Button
-                          type="button"
-                          onClick={useCalculatorValue}
-                          variant="outline"
-                          size="sm"
-                        >
+                        <Button type="button" onClick={useCalculatorValue} variant="outline" size="sm">
                           Use Calc
                         </Button>
                       </div>
@@ -282,9 +275,7 @@ export function TransactionForm({
                           step="0.01"
                           placeholder="10.00"
                           {...field}
-                          onChange={(e) =>
-                            field.onChange(parseFloat(e.target.value) || 0)
-                          }
+                          onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                         />
                       </FormControl>
                       <FormMessage />
@@ -299,10 +290,7 @@ export function TransactionForm({
                     <FormItem>
                       <FormLabel>Description (Optional)</FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="Enter description..."
-                          {...field}
-                        />
+                        <Textarea placeholder="Enter description..." {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -333,11 +321,7 @@ export function TransactionForm({
                   <Button type="submit" className="flex-1">
                     {editTransaction ? "Update Transaction" : "Add Transaction"}
                   </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                  >
+                  <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                     Cancel
                   </Button>
                 </div>
@@ -345,7 +329,7 @@ export function TransactionForm({
             </Form>
           </div>
 
-          {/* Calculator */}
+          {/* Calculator Section */}
           <div className="xl:block">
             <Card>
               <CardHeader>
@@ -360,94 +344,47 @@ export function TransactionForm({
                     {calculatorDisplay}
                   </div>
                   <div className="grid grid-cols-4 gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={handleCalculatorClear}
-                      className="col-span-2 text-sm"
-                    >
+                    <Button variant="outline" onClick={handleCalculatorClear} className="col-span-2 text-sm">
                       Clear
                     </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorOperation("/")}
-                      className="text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorOperation("/")} className="text-sm">
                       ÷
                     </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorOperation("*")}
-                      className="text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorOperation("*")} className="text-sm">
                       ×
                     </Button>
 
                     {[7, 8, 9].map((num) => (
-                      <Button
-                        key={num}
-                        variant="outline"
-                        onClick={() => handleCalculatorNumber(num.toString())}
-                        className="text-sm"
-                      >
+                      <Button key={num} variant="outline" onClick={() => handleCalculatorNumber(num.toString())} className="text-sm">
                         {num}
                       </Button>
                     ))}
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorOperation("-")}
-                      className="text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorOperation("-")} className="text-sm">
                       <Minus className="h-4 w-4" />
                     </Button>
 
                     {[4, 5, 6].map((num) => (
-                      <Button
-                        key={num}
-                        variant="outline"
-                        onClick={() => handleCalculatorNumber(num.toString())}
-                        className="text-sm"
-                      >
+                      <Button key={num} variant="outline" onClick={() => handleCalculatorNumber(num.toString())} className="text-sm">
                         {num}
                       </Button>
                     ))}
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorOperation("+")}
-                      className="row-span-2 text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorOperation("+")} className="row-span-2 text-sm">
                       <Plus className="h-4 w-4" />
                     </Button>
 
                     {[1, 2, 3].map((num) => (
-                      <Button
-                        key={num}
-                        variant="outline"
-                        onClick={() => handleCalculatorNumber(num.toString())}
-                        className="text-sm"
-                      >
+                      <Button key={num} variant="outline" onClick={() => handleCalculatorNumber(num.toString())} className="text-sm">
                         {num}
                       </Button>
                     ))}
 
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorNumber("0")}
-                      className="col-span-2 text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorNumber("0")} className="col-span-2 text-sm">
                       0
                     </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => handleCalculatorNumber(".")}
-                      className="text-sm"
-                    >
+                    <Button variant="outline" onClick={() => handleCalculatorNumber(".")} className="text-sm">
                       .
                     </Button>
-                    <Button
-                      variant="outline"
-                      onClick={handleCalculatorEquals}
-                      className="text-sm"
-                    >
+                    <Button variant="outline" onClick={handleCalculatorEquals} className="text-sm">
                       <Equal className="h-4 w-4" />
                     </Button>
                   </div>
